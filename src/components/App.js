@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import Footer from './Footer';
 import AddTodo from './AddTodo';
 import VisibleTodoList from './VisibleTodoList';
@@ -10,5 +10,11 @@ const App = () => (
     <Footer />
   </div>
 );
+
+App.propTypes = {
+  params: PropTypes.shape({
+    filter: PropTypes.string,
+  }),
+};
 
 export default App;
