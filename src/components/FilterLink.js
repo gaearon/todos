@@ -1,20 +1,16 @@
-import { connect } from 'react-redux';
-import { setVisibilityFilter } from '../actions';
-import Link from './Link';
+import React from 'react';
+import { Link } from 'react-router'; // We now want the router to be in control of any state that is in the url
 
-const mapStateToProps = (state, ownProps) => ({
-  active: ownProps.filter === state.visibilityFilter,
-});
-
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  onClick() { // This is ES6 method notation
-    dispatch(setVisibilityFilter(ownProps.filter));
-  }
-});
-
-const FilterLink = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Link);
+const FilterLink = ({ filter, children }) => (
+	<Link
+		to={filter === 'all' ? '' : filter}
+		activeStyle={{
+			textDecoration: 'none',
+			color: 'black'
+		}}
+	>
+		{children}
+	</Link>
+);
 
 export default FilterLink;
