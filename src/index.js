@@ -6,6 +6,7 @@ import { createStore } from 'redux';
 import todoApp from './reducers';
 import App from './components/App';
 import { loadState, saveState } from './localStorage';
+import throttle from 'lodash/throttle';
 
 const persistedState = loadState();
 
@@ -15,6 +16,12 @@ const store = createStore(
 ); // You can use the 2nd arg to hydrate the redux store with persisted data because it was obtained from redux
 // and therefor doesn't break encapsulation of reducers
 console.log(store.getState());
+
+store.subscribe(throttle(() => {
+	saveState({
+		todos: store.getState().todos
+	});
+}, 1000));
 
 render(
   <Provider store={store}>

@@ -12,7 +12,7 @@ export const loadState = () => {
 
 export const saveState = (state) => {
 	try { // In redux apps your state should always be serializeable
-		const serializedState = JSON.stringify(state);
+		const serializedState = JSON.stringify(state); // stringify is an expensive operation so we don't want to call it all the time
 		localStorage.setItem('state', serializedState);
 	} catch (err) {
 		// Ignore write errors.
