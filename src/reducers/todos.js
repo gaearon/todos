@@ -35,4 +35,17 @@ const todos = (state = [], action) => {
   }
 };
 
-export default todos;
+export default todos; // the default export is always the reducer func
+
+export const getVisibleTodos = (state, filter) => { // but any export starting with get prepairs to data to be rendered by the UI
+  switch (filter) {                                 // These are called SELECTORS
+    case 'all':
+      return state;
+    case 'completed':
+      return state.filter(t => t.completed);
+    case 'active':
+      return state.filter(t => !t.completed);
+    default:
+      throw new Error(`Unknown filter: ${filter}.`);
+  }
+};
