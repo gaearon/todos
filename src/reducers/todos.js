@@ -1,3 +1,5 @@
+import { combineReducers } from 'redux';
+
 const todo = (state, action) => {
   switch (action.type) {
     case 'ADD_TODO':
@@ -31,6 +33,20 @@ const byId = (state = {}, action) => {
       return state;
   }
 };
+
+const allIds = (state = [], action) => {
+  switch (action.type) {
+    case'ADD_TODO':
+      return [...state, action.id];
+    default:
+      return state;
+  }
+};
+
+const todos = combineReducers({
+  byId,
+  allIds,
+});
 
 export default todos; // the default export is always the reducer func
 
