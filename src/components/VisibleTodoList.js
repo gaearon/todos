@@ -1,24 +1,13 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router'; // Takes a component and returns a new component that injects router related props (like params) inside your component
 import { toggleTodo } from '../actions';
+import { getVisibleTodos } from '../reducers';
 import TodoList from './TodoList';
 
-const getVisibleTodos = (todos, filter) => {
-  switch (filter) {
-    case 'all':
-      return todos;
-    case 'completed':
-      return todos.filter(t => t.completed);
-    case 'active':
-      return todos.filter(t => !t.completed);
-    default:
-      throw new Error(`Unknown filter: ${filter}.`);
-  }
-};
 
 const mapStateToProps = (state, { params }) => ({ // { params } === ownProps.params
-    todos: getVisibleTodos(state.todos, params.filter || 'all'),
-});
+    todos: getVisibleTodos(state, params.filter || 'all'), // now we can just pass the state b/c getVisibleTodos encapsulates all the knowledge
+});                               // about the application state shape
 
 // const mapDispatchToProps = (dispatch) => ({
 //     onTodoClick: (id) => { // when the args for the cb match the args for the action creator exactly
