@@ -50,14 +50,18 @@ const todos = combineReducers({
 
 export default todos; // the default export is always the reducer func
 
+const getAllTodos = (state) => // since we no longer have an array of todos
+  state.allIds.map(id => state.byId[id]);
+
 export const getVisibleTodos = (state, filter) => { // but any export starting with get prepairs to data to be rendered by the UI
+  const allTodos = getAllTodos(state);
   switch (filter) {                                 // These are called SELECTORS
     case 'all':
-      return state;
+      return allTodos;
     case 'completed':
-      return state.filter(t => t.completed);
+      return allTodos.filter(t => t.completed);
     case 'active':
-      return state.filter(t => !t.completed);
+      return allTodos.filter(t => !t.completed);
     default:
       throw new Error(`Unknown filter: ${filter}.`);
   }
