@@ -1,25 +1,5 @@
 import { combineReducers } from 'redux';
-
-const todo = (state, action) => {
-  switch (action.type) {
-    case 'ADD_TODO':
-      return {
-        id: action.id,
-        text: action.text,
-        completed: false,
-      };
-    case 'TOGGLE_TODO':
-      if (state.id !== action.id) {
-        return state;
-      }
-      return {
-        ...state,
-        completed: !state.completed,
-      };
-    default:
-      return state;
-  }
-};
+import todo from './todo';
 
 const byId = (state = {}, action) => {
   switch (action.type) {
@@ -51,7 +31,7 @@ const todos = combineReducers({
 export default todos; // the default export is always the reducer func
 
 const getAllTodos = (state) => // since we no longer have an array of todos
-  state.allIds.map(id => state.byId[id]);
+  state.allIds.map(id => state.byId[id]); // so we make a selector that creates one
 
 export const getVisibleTodos = (state, filter) => { // but any export starting with get prepairs to data to be rendered by the UI
   const allTodos = getAllTodos(state);
