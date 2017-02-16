@@ -18,7 +18,7 @@ const mapStateToProps = (state, { params }) => ({ // { params } === ownProps.par
 const VisibleTodoList = withRouter(connect(
   mapStateToProps,
   /*mapDispatchToProps*/
-  { onTodoClick: toggletodo } // obj contains the cb func mapped to the action creator func we want to inject
+  { onTodoClick: toggleTodo } // obj contains the cb func mapped to the action creator func we want to inject
 )(TodoList));
 
 export default VisibleTodoList;
