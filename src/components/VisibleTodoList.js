@@ -4,7 +4,6 @@ import { withRouter } from 'react-router'; // Takes a component and returns a ne
 import * as actions from '../actions';
 import { getVisibleTodos } from '../reducers';
 import TodoList from './TodoList';
-import { fetchTodos } from '../api';
 
 class VisibleTodoList extends Component { // The only reason we create a component here is b/c
 	componentDidMount() { // you can't overwrite the lifecycle hooks of a generated component
@@ -19,10 +18,8 @@ class VisibleTodoList extends Component { // The only reason we create a compone
 
 	fetchData() { // We want fetchTodos to become part of the redux store state but the only way
 		// To integrate something into the state is to dispatch an ACTION
-		const { filter, receiveTodos } = this.props;
-		fetchTodos(filter).then(todos =>
-			receiveTodos(filter, todos) // So we call the callback prop receiveTodos
-		); // b/c fetchTodos is async, It's important to destructure the props right away in case of quick navigation
+		const { filter, fetchTodos } = this.props; // Is populated from connect below
+		fetchTodos(filter); // b/c fetchTodos is async, It's important to destructure the props right away in case of quick navigation
 	}
 
 	render() {
