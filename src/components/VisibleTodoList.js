@@ -13,6 +13,14 @@ class VisibleTodoList extends Component { // The only reason we create a compone
 		);
 	}
 
+	componentDidUpdate(prevProps) {
+		if (this.props.filter !== prevProps.filter) {
+			fetchTodos(this.props.filter).then(todos =>
+				console.log(this.props.filter, todos)
+			);
+		}
+	}
+
 	render() {
 		return <TodoList {...this.props} />;
 	}

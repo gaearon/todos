@@ -20,7 +20,7 @@ const fakeDatabase = {
 };
 
 const delay = (ms) =>
-	new Promis(resolve => setTimeout(resolve, ms));
+	new Promise(resolve => setTimeout(resolve, ms));
 
 export const fetchTodos = (filter) =>
 	delay(500).then(() => {
