@@ -18,12 +18,12 @@ const addLoggingToDispatch = (store) => {
 }
 
 const addPromiseSupportToDispatch = (store) => {
-	const rawDispatch = store.dispatch;
+	const next = store.dispatch;
 	return (action) => {
 		if (typeof action.then === 'function') {
-			return action.then(rawDispatch);
+			return action.then(next);
 		}
-		return rawDispatch(action);
+		return next(action);
 	};
 };
 
