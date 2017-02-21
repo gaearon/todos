@@ -2,32 +2,41 @@ import { createStore } from 'redux';
 import todoApp from './reducers';
 
 const addLoggingToDispatch = (store) => {
-	const rawDispatch = store.dispatch;
-	if (!console.group) {
-		return rawDispatch;
-	}
-	return (action) => {
-		console.group(action.type);
-		console.log('%c prev state', 'color: gray', store.getState());
-		console.log('%c action', 'color: blue', action);
-		const returnValue = rawDispatch(action);
-		console.log('%c next state', 'color: green', store.getState());
-		console.groupEnd(action.type);
-		return returnValue;
-	}
-}
-
-const addPromiseSupportToDispatch = (store) => {
-	const next = store.dispatch;
-	return (action) => {
-		if (typeof action.then === 'function') {
-			return action.then(next);
+	return (next) => {
+		if (!console.group) {
+			return next;
 		}
-		return next(action);
+		return (action) => {
+			console.group(action.type);
+			console.log('%c prev state', 'color: gray', store.getState());
+			console.log('%c action', 'color: blue', action);
+			const returnValue = next(action);
+			console.log('%c next state', 'color: green', store.getState());
+			console.groupEnd(action.type);
+			return returnValue;
+		};
 	};
 };
 
+const addPromiseSupportToDispatch = (store) => {
+	return (next) => {
+		return (action) => {
+			if (typeof action.then === 'function') {
+				return action.then(next);
+			}
+			return next(action);
+		};
+	};
+};
+
+const wrapDispatchWithmiddlewares = (store, middlewares) => {
+	middlewares.forEach(middleware =>
+		store.dispatch = middleware(store)
+	);
+};
+
 const configureStore = () => {
+	const middlewares = [];
 	const store = createStore(
 		todoApp
 		 // Whatever is passed as the second arg to createStore will end up as the state for the root reducer
@@ -36,10 +45,12 @@ const configureStore = () => {
 	console.log(store.getState());
 
 	if (process.env.NODE_ENV !== 'production') {
-		store.dispatch = addLoggingToDispatch(store);
+		middlewares.push(addLoggingToDispatch);
 	}
 
-	store.dispatch = addPromiseSupportToDispatch(store);
+	middlewares.push(addPromiseSupportToDispatch);
+
+	wrapDispatchWithmiddlewares(store, middlewares);
 
 	return store;
 };
