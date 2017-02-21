@@ -21,7 +21,7 @@ class VisibleTodoList extends Component { // The only reason we create a compone
 		// To integrate something into the state is to dispatch an ACTION
 		const { filter, receiveTodos } = this.props;
 		fetchTodos(filter).then(todos =>
-			receiveTodos(todos) // So we call the callback prop receiveTodos
+			receiveTodos(filter, todos) // So we call the callback prop receiveTodos
 		); // b/c fetchTodos is async, It's important to destructure the props right away in case of quick navigation
 	}
 
