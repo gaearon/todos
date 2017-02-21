@@ -19,9 +19,10 @@ class VisibleTodoList extends Component { // The only reason we create a compone
 
 	fetchData() { // We want fetchTodos to become part of the redux store state but the only way
 		// To integrate something into the state is to dispatch an ACTION
-		fetchTodos(this.props.filter).then(todos =>
-			this.props.receiveTodos(todos) // So we call the callback prop receiveTodos
-		);
+		const { filter, receiveTodos } = this.props;
+		fetchTodos(filter).then(todos =>
+			receiveTodos(todos) // So we call the callback prop receiveTodos
+		); // It's important to destructure the props right away in case of quick navigation
 	}
 
 	render() {
