@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router'; // Takes a component and returns a new component that injects router related props (like params) inside your component
-import { toggleTodo, receiveTodos } from '../actions';
+import * as actions from '../actions';
 import { getVisibleTodos } from '../reducers';
 import TodoList from './TodoList';
 import { fetchTodos } from '../api';
@@ -22,20 +22,26 @@ class VisibleTodoList extends Component { // The only reason we create a compone
 		const { filter, receiveTodos } = this.props;
 		fetchTodos(filter).then(todos =>
 			receiveTodos(todos) // So we call the callback prop receiveTodos
-		); // It's important to destructure the props right away in case of quick navigation
+		); // b/c fetchTodos is async, It's important to destructure the props right away in case of quick navigation
 	}
 
 	render() {
-		return <TodoList {...this.props} />;
+		const { toggleTodo, ...rest } = this.props;
+		return (
+			<TodoList
+				{...rest}
+				onTodoClick={toggleTodo}
+			/>
+		);
 	}
 }
 
 const mapStateToProps = (state, { params }) => { // { params } === ownProps.params
-	const filter = params.filter || 'all';
+	const filter = params.filter || 'all'; // We get the params from withRouter call below
 	return {
 		todos: getVisibleTodos(state, filter), // now we can just pass the state b/c getVisibleTodos encapsulates all the knowledge
         filter,                      // about the application state shape
-	}
+	} // explicitly passing filter as a prop makes it available inside the component
 };
 
 // const mapDispatchToProps = (dispatch) => ({
@@ -44,10 +50,10 @@ const mapStateToProps = (state, { params }) => { // { params } === ownProps.para
 //     },
 // });
 
-VisibleTodoList = withRouter(connect(
-  mapStateToProps,
+VisibleTodoList = withRouter(connect( // withRouter subscribes to the router changes and
+  mapStateToProps,	// connect subscribes to the redux store
   /*mapDispatchToProps*/
-  { onTodoClick: toggleTodo, receiveTodos } // obj contains the cb func mapped to the action creator func we want to inject
+  actions // obj contains the cb func mapped to the action creator func we want to inject
 )(VisibleTodoList));
 
 export default VisibleTodoList;
