@@ -9,7 +9,7 @@ import { fetchTodos } from '../api';
 class VisibleTodoList extends Component { // The only reason we create a component here is b/c
 	componentDidMount() { // you can't overwrite the lifecycle hooks of a generated component
 		fetchTodos(this.props.filter).then(todos =>
-			console.log(this.props.filter, todos);
+			console.log(this.props.filter, todos)
 		);
 	}
 
