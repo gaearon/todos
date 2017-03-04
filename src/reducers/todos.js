@@ -14,35 +14,20 @@ const byId = (state = {}, action) => {
   }
 };
 
-const allIds = (state = [], action) => {
-  switch (action.type) {
-    case'ADD_TODO':
-      return [...state, action.id];
-    default:
-      return state;
-  }
-};
+const idsByFilter = combineReducers({
+  all: allIds,
+  active: activeIds,
+  completed: completedIds,
+});
 
 const todos = combineReducers({
   byId,
-  allIds,
+  idsByFilter,
 });
 
 export default todos; // the default export is always the reducer func
 
-const getAllTodos = (state) => // since we no longer have an array of todos
-  state.allIds.map(id => state.byId[id]); // so we make a selector that creates one
-
-export const getVisibleTodos = (state, filter) => { // but any export starting with get prepairs to data to be rendered by the UI
-  const allTodos = getAllTodos(state);
-  switch (filter) {                                 // These are called SELECTORS
-    case 'all':
-      return allTodos;
-    case 'completed':
-      return allTodos.filter(t => t.completed);
-    case 'active':
-      return allTodos.filter(t => !t.completed);
-    default:
-      throw new Error(`Unknown filter: ${filter}.`);
-  }
+export const getVisibleTodos = (state, filter) => { // but any export starting with get prepairs the data to be rendered by the UI
+  const ids = state.idsByFilter[filter];
+  return ids.map(id => state.byId[id]);
 };
