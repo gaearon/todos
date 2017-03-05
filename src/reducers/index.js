@@ -1,20 +1,6 @@
 import { combineReducers } from 'redux';
 import byId, * as fromById from './byId';
 
-const createList = (filter) => {
-  return (state = [], action) => {
-    if (action.filter !== filter) {
-      return state;
-    }
-    switch (action.type) {
-      case 'RECEIVE_TODOS':
-        return action.response.map(todo => todo.id);
-      default:
-        return state;
-    }
-  }
-};
-
 const idsByFilter = combineReducers({
   all: createList('all'),
   active: createList('active'),
