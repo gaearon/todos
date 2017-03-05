@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 import byId, * as fromById from './byId';
+import createList, * as fromList from './createList';
 
-const idsByFilter = combineReducers({
+const listByFilter = combineReducers({
   all: createList('all'),
   active: createList('active'),
   completed: createList('completed'),
@@ -9,12 +10,12 @@ const idsByFilter = combineReducers({
 
 const todos = combineReducers({
   byId,
-  idsByFilter,
+  listByFilter,
 });
 
 export default todos; // the default export is always the reducer func
 
 export const getVisibleTodos = (state, filter) => { // but any export starting with get prepairs the data to be rendered by the UI
-  const ids = state.idsByFilter[filter];
-  return ids.map(id => state.byId[id]);
+  const ids = fromList.getIds(state.listByFilter[filter]);
+  return ids.map(id => fromById.getTodo(state.byId, id));
 };
