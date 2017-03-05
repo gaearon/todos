@@ -9,7 +9,7 @@ const receiveTodos = (filter, response) => ({
 
 export const fetchTodos = (filter) =>
 	api.fetchTodos(filter).then(response =>
-		receiveTodos(filter, response);
+		receiveTodos(filter, response)
 	);
 
 export const addTodo = (text) => ({
