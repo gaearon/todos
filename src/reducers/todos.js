@@ -19,7 +19,9 @@ const todo = (state, action) => {
   }
 };
 
-const todos = (state = [], action) => {
+const todosInitialState = [];
+
+const todos = (state = todosInitialState, action) => {
   switch (action.type) {
     case 'ADD_TODO':
       return [
@@ -30,6 +32,8 @@ const todos = (state = [], action) => {
       return state.map(t =>
         todo(t, action)
       );
+    case 'DELETE_ALL_TODOS':
+      return todosInitialState;
     default:
       return state;
   }
