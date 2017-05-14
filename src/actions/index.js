@@ -20,3 +20,5 @@ export const toggleTodo = (id) => {
     id,
   };
 };
+
+export const deleteAllTodos = () => ({type: 'DELETE_ALL_TODOS'});
