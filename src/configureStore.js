@@ -2,6 +2,7 @@ import { createStore } from 'redux';
 import throttle from 'lodash/throttle';
 import todoApp from './reducers';
 import { loadState, saveState } from './localStorage';
+import { getPersistableState } from './reducers';
 
 const configureStore = () => {
   const persistedState = loadState();
@@ -9,7 +10,7 @@ const configureStore = () => {
 
   store.subscribe(throttle(() => {
     saveState({
-      todos: store.getState().todos,
+      todos: getPersistableState(store.getState()),
     });
   }, 1000));
 

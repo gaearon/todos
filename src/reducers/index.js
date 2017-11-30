@@ -9,3 +9,6 @@ export default todoApp;
 
 export const getVisibleTodos = (state, filter) =>
   fromTodos.getVisibleTodos(state.todos, filter);
+
+export const getPersistableState = (state) =>
+    state.todos;
