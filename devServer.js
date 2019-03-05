@@ -1,7 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import webpackDevMiddleware from 'webpack-dev-middleware';
-import config from './webpack.config.babel';
+import config from './webpack.config.dev';
 import Express from 'express';
 
 const app = new Express();
@@ -13,11 +13,11 @@ app.use(webpackDevMiddleware(compiler, {
   publicPath: config.output.publicPath,
 }));
 
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(port, error => {
+app.listen(port, (error) => {
   /* eslint-disable no-console */
   if (error) {
     console.error(error);
@@ -25,7 +25,7 @@ app.listen(port, error => {
     console.info(
       '🌎 Listening on port %s. Open up http://localhost:%s/ in your browser.',
       port,
-      port
+      port,
     );
   }
   /* eslint-enable no-console */

@@ -1,0 +1,18 @@
+body {
+  margin: 0;
+  padding: 20px 0;
+  font-size: 24px;
+  font-family: Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fefefe;
+  /* background-color: rgba(238, 99, 82, 0.2); */
+}
+
+#root {
+  width: 90%;
+  max-width: 900px;
+  margin: 0 auto;
+}

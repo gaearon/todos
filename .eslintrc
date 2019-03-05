@@ -3,6 +3,6 @@
   "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true
-    },
-  },
+    }
+  }
 }

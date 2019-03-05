@@ -1,12 +1,14 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { addTodo } from '../actions';
+import { addTodo } from '../../actions';
+import './AddTodo.css';
 
 const AddTodo = ({ dispatch }) => {
   let input;
 
   return (
-    <div>
+    <div className="AddTodo">
       <form
         onSubmit={e => {
           e.preventDefault();
