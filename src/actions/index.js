@@ -1,6 +1,16 @@
-import { v4 } from 'node-uuid';
 import * as api from '../api';
 import { getIsFetching } from '../reducers';
+
+const addTodo = text => ({
+  type: 'ADD_TODO',
+  text,
+});
+
+const toggleTodo = (id) => ({
+  type: 'TOGGLE_TODO',
+  id,
+});
+
 
 const requestTodos = filter => ({
   type: 'REQUEST_TODOS',
@@ -24,13 +34,9 @@ export const fetchTodos = (filter) => (dispatch, getState) => {
     .then(todos => dispatch(receiveTodos(filter, todos)));
 };
 
-export const addTodo = (text) => ({
-  type: 'ADD_TODO',
-  id: v4(),
-  text,
-});
+export const addAsyncTodo = (filter, text) => (dispatch, getState) => {
+  dispatch(addTodo(text));
 
-export const toggleTodo = (id) => ({
-  type: 'TOGGLE_TODO',
-  id,
-});
+  api.addTodo(filter, text)
+    .then(todos => dispatch(receiveTodos(filter, todos)));
+};

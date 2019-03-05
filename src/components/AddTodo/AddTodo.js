@@ -1,35 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { addTodo } from '../../actions';
+import { withRouter } from 'react-router-dom';
+import *  as actions from '../../actions';
 import './AddTodo.css';
 
-const AddTodo = ({ dispatch }) => {
-  let input;
+class WrappedComponent extends Component {
+  render() {
+    const filter = this.props.match.params.filter || 'all';
 
-  return (
-    <div className="AddTodo">
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          if (!input.value.trim()) {
-            return;
-          }
-          dispatch(addTodo(input.value));
-          input.value = '';
-        }}
-      >
-        <input ref={node => { input = node; }} />
-        <button type="submit">
-          Add Todo
-        </button>
-      </form>
-    </div>
-  );
-};
+    let input;
 
-AddTodo.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
+    return (
+      <div className="AddTodo">
+        <form
+          onSubmit={e => {
+            e.preventDefault();
+            if (!input.value.trim()) {
+              return;
+            }
+            this.props.addAsyncTodo(filter, input.value);
+            input.value = '';
+          }}
+        >
+          <input ref={node => { input = node; }} />
+          <button type="submit">
+            Add Todo
+          </button>
+        </form>
+      </div>
+    );
+  }
+}
 
-export default connect()(AddTodo);
+const AddTodo = compose(
+  withRouter,
+  connect(null, actions),
+)(WrappedComponent);
+
+export default AddTodo;

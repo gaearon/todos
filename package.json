@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Redux Todos example",
   "scripts": {
-    "start": "webpack --mode development && babel-node devServer.js",
+    "start": "babel-node devServer.js",
     "build": "webpack -p",
     "lint": "eslint src"
   },

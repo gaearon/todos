@@ -9,9 +9,7 @@ module.exports = {
     filename: '[name].js',
     publicPath: '/static/',
   },
-  devServer: {
-    port: 3000,
-  },
+  mode: 'development',
   module: {
     rules: [
       {
