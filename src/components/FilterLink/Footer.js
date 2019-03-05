@@ -1,6 +1,6 @@
 import React from 'react';
 import FilterLink from './FilterLink';
-import './Footer.css'
+import './Footer.css';
 
 const Footer = () => (
   <ul className="Footer" >
