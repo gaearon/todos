@@ -26,7 +26,7 @@ class WrapedComponent extends Component {
   }
 
   render() {
-    const { toggleTodo, isFetching, todos} = this.props;
+    const { toggleAsyncTodo, isFetching, todos, filter} = this.props;
     if (isFetching && !todos.length) {
       return <p>Loading...</p>;
     }
@@ -34,7 +34,8 @@ class WrapedComponent extends Component {
     return (
       <TodoList
         todos={todos}
-        onTodoClick={toggleTodo}
+        filter={filter}
+        onTodoClick={toggleAsyncTodo}
       />
     );
   }
@@ -51,8 +52,8 @@ const mapStateToProps = (state, ownProps) => {
 const VisibleTodoList = withRouter(
   connect(
     mapStateToProps,
-    actions
-  )(WrapedComponent)
+    actions,
+  )(WrapedComponent),
 );
 
 export default VisibleTodoList;

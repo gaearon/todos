@@ -34,9 +34,16 @@ export const fetchTodos = (filter) => (dispatch, getState) => {
     .then(todos => dispatch(receiveTodos(filter, todos)));
 };
 
-export const addAsyncTodo = (filter, text) => (dispatch, getState) => {
+export const addAsyncTodo = (filter, text) => (dispatch) => {
   dispatch(addTodo(text));
 
   api.addTodo(filter, text)
+    .then(todos => dispatch(receiveTodos(filter, todos)));
+};
+
+export const toggleAsyncTodo = (filter, id) => (dispatch) => {
+  dispatch(toggleTodo(id));
+
+  api.toggleTodo(filter, id)
     .then(todos => dispatch(receiveTodos(filter, todos)));
 };

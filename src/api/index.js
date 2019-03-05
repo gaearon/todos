@@ -56,3 +56,23 @@ export const addTodo = (filter, todoText) =>
           throw Error(`Unknown filter: ${filter}`);
       }
     });
+
+  export const toggleTodo = (filter, id) =>
+    delay(500)
+      .then(() => fakeDatabase.todos.map(todo => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
+        }
+      }))
+      .then(() => {
+        switch (filter) {
+          case 'all':
+            return fakeDatabase.todos;
+          case 'active':
+            return fakeDatabase.todos.filter(todo => !todo.completed);
+          case 'completed':
+            return fakeDatabase.todos.filter(todo => todo.completed);
+          default:
+            throw Error(`Unknown filter: ${filter}`);
+        }
+      });

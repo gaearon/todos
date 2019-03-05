@@ -1,6 +1,7 @@
 .Todo {
   color: rgba(255, 255, 255, .87);
   padding: 10px;
+  cursor: pointer;
 }
 
 .Todo:hover {
