@@ -2,6 +2,10 @@
 
 This is an example of redux in react apps. This code was forked from a [Dan Abramov repo](https://github.com/gaearon/todos).
 
+This app use a fake backend in order to ilustrate the flow of how to manage async actions with redux.
+
+## [Demo](https://xenodochial-morse-bacef2.netlify.com)
+
 ## Run local
 
 Follow the next steps to run this project locally:
