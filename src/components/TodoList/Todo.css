@@ -1,3 +1,9 @@
+.TodoList {
+  list-style: 'none';
+  padding: 0;
+  height: 50%;
+  overflow: scroll;
+}
 .Todo {
   color: rgba(255, 255, 255, .87);
   padding: 10px;
