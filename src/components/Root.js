@@ -11,7 +11,6 @@ const Root = (props) => (
     <h1>Idiomatic Redux Todo List</h1>
     <BrowserRouter>
       <Route
-        exact
         path="/:filter?"
         component={App}
         {...props}
