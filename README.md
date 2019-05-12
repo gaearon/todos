@@ -4,7 +4,7 @@ This is an example of redux in react apps. This code was forked from a [Dan Abra
 
 This app use a fake backend in order to ilustrate the flow of how to manage async actions with redux.
 
-## [Demo](https://xenodochial-morse-bacef2.netlify.com)
+## <a href="https://todo-list-redux.netlify.com" target="_blank"><b>Demo</b><a/>
 
 ## Run local
 
