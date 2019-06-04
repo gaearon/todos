@@ -1,19 +1,21 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Todo from './Todo';
 
-const TodoList = ({ todos, onTodoClick }) => (
-  <ul>
+const TodoList = ({ filter, todos, onTodoClick }) => (
+  <ul className="TodoList">
     {todos.map(todo =>
       <Todo
         key={todo.id}
         {...todo}
-        onClick={() => onTodoClick(todo.id)}
+        onClick={() => onTodoClick(filter, todo.id)}
       />
     )}
   </ul>
 );
 
 TodoList.propTypes = {
+  filter: PropTypes.string.isRequired,
   todos: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     completed: PropTypes.bool.isRequired,

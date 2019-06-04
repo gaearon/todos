@@ -1,0 +1,42 @@
+.AddTodo form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.AddTodo form input {
+  padding: 10px;
+  font-size: 21px;
+  background-color: rgba(255, 255, 255, .6);
+  color: #1F2421;
+  border: none;
+  width: 100%;
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.AddTodo form input:focus {
+  outline: none;
+}
+
+.AddTodo form button {
+  background-color: #2EC4B6;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: rgba(255, 255, 255, .87);
+  font-size: 1em;
+  cursor: pointer;
+  position: relative;
+  box-shadow: 0 4px #24A094;
+}
+
+.AddTodo form button:focus {
+  outline: none;
+}
+
+.AddTodo form button:active {
+  box-shadow: 0 2px #24A094;
+  top: 2px;
+}

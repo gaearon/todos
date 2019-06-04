@@ -1,0 +1,8 @@
+.App {
+  height: 450px;
+  background-color: #EE6352;
+  border-radius: 30px;
+  box-shadow: 0px 0px 65px -9px rgba(0,0,0,0.52);
+  padding: 30px;
+  color: white;
+}

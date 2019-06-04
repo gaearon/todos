@@ -1,20 +1,13 @@
 import path from 'path';
-import webpack from 'webpack';
-import webpackDevMiddleware from 'webpack-dev-middleware';
-import config from './webpack.config.dev';
 import Express from 'express';
 
 const app = new Express();
-const port = 3000;
+const port = 5000;
 
-const compiler = webpack(config);
-app.use(webpackDevMiddleware(compiler, {
-  noInfo: true,
-  publicPath: config.output.publicPath,
-}));
+app.use(Express.static(path.join(__dirname, 'dist')));
 
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src/index.html'));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '/dist/index.html'));
 });
 
 app.listen(port, (error) => {
