@@ -1,45 +1,36 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as actions from '../../actions';
 import { getVisibleTodos, getIsFetching } from '../../reducers';
 import TodoList from './TodoList';
 
-class WrapedComponent extends Component {
-  componentDidMount() {
-    this.fetchData();
-  }
+const WrapedComponent = (props) => {
+  const {
+    toggleAsyncTodo,
+    fetchTodos,
+    isFetching,
+    todos,
+    filter
+  } = props;
 
-  componentDidUpdate(prevProps) {
-    const { filter } = this.props;
-    const prevFilter = prevProps.filter;
-
-    if (filter !== prevFilter) {
-      this.fetchData();
-    }
-  }
-
-  fetchData() {
-    const { filter, fetchTodos } = this.props;
+  useEffect(() => {
     fetchTodos(filter);
-      /* .then(() => console.log('done!')); */
+  }, [filter]);
+
+  if (isFetching && !todos.length) {
+    return <p>Loading...</p>;
   }
 
-  render() {
-    const { toggleAsyncTodo, isFetching, todos, filter} = this.props;
-    if (isFetching && !todos.length) {
-      return <p>Loading...</p>;
-    }
+  return (
+    <TodoList
+      todos={todos}
+      filter={filter}
+      onTodoClick={toggleAsyncTodo}
+    />
+  );
+};
 
-    return (
-      <TodoList
-        todos={todos}
-        filter={filter}
-        onTodoClick={toggleAsyncTodo}
-      />
-    );
-  }
-}
 const mapStateToProps = (state, ownProps) => {
   const filter = ownProps.match.params.filter || 'all';
   return {
