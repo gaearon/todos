@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { addTodo } from '../actions';
+import { addTodo, addStatic } from '../actions';
 
-const AddTodo = ({ dispatch }) => {
+// eslint-disable-next-line no-shadow
+const AddTodo = ({ addTodo, addStatic }) => {
   let input;
 
   return (
@@ -13,7 +14,7 @@ const AddTodo = ({ dispatch }) => {
           if (!input.value.trim()) {
             return;
           }
-          dispatch(addTodo(input.value));
+          addTodo(input.value);
           input.value = '';
         }}
       >
@@ -22,12 +23,21 @@ const AddTodo = ({ dispatch }) => {
           Add Todo
         </button>
       </form>
+
+      <button onClick={addStatic}>
+        Add Static
+      </button>
     </div>
   );
 };
 
 AddTodo.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  addTodo: PropTypes.func.isRequired,
+  addStatic: PropTypes.func.isRequired,
 };
 
-export default connect()(AddTodo);
+const mapDispatchToProps = {
+  addTodo, addStatic,
+};
+
+export default connect(null, mapDispatchToProps)(AddTodo);

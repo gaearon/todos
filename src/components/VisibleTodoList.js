@@ -1,10 +1,13 @@
+/* eslint-disable no-console */
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actions from '../actions';
-import { getVisibleTodos, getErrorMessage, getIsFetching } from '../reducers';
+import { getErrorMessage, getIsFetching } from '../reducers';
 import TodoList from './TodoList';
 import FetchError from './FetchError';
+import * as fromList from '../reducers/createList';
+import * as fromById from '../reducers/byId';
 
 class VisibleTodoList extends Component {
   componentDidMount() {
@@ -23,6 +26,7 @@ class VisibleTodoList extends Component {
   }
 
   render() {
+    console.log('VisibleTodoList : render');
     const { isFetching, errorMessage, toggleTodo, todos } = this.props;
     if (isFetching && !todos.length) {
       return <p>Loading...</p>;
@@ -55,18 +59,44 @@ VisibleTodoList.propTypes = {
 };
 
 const mapStateToProps = (state, { params }) => {
+  console.log('VisibleTodoList : mapState');
   const filter = params.filter || 'all';
   return {
     isFetching: getIsFetching(state, filter),
     errorMessage: getErrorMessage(state, filter),
-    todos: getVisibleTodos(state, filter),
+    // Not optimized : return always a new ref obj todos
+    // todos: getVisibleTodos(state, filter),
     filter,
+    listByFilter: state.listByFilter,
+    byId: state.byId,
+  };
+};
+
+const mapDispatchToProps = {
+  ...actions,
+};
+
+const mergeProps = (stateProps, dispatchProps) => {
+  console.log('VisibleTodoList : mergeProps');
+  const { byId, listByFilter, filter } = stateProps;
+
+  // Optimize todos selectors in mergeProps
+  const ids = fromList.getIds(listByFilter[filter]);
+  const todos = ids.map(id => fromById.getTodo(byId, id));
+
+  const newFncTest = () => {};
+  return {
+    ...stateProps,
+    ...dispatchProps,
+    todos,
+    newFncTest,
   };
 };
 
 VisibleTodoList = withRouter(connect(
   mapStateToProps,
-  actions
+  mapDispatchToProps,
+  mergeProps
 )(VisibleTodoList));
 
 export default VisibleTodoList;

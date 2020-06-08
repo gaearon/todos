@@ -46,3 +46,8 @@ export const toggleTodo = (id) => (dispatch) =>
       response: normalize(response, schema.todo),
     });
   });
+
+export const addStatic = () => ({
+  type: 'ADD_STATIC',
+  data: 'merde static',
+});
