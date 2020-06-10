@@ -3,7 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import * as actions from '../actions';
-import { getErrorMessage, getIsFetching } from '../reducers';
+// eslint-disable-next-line no-unused-vars
+import { getErrorMessage, getIsFetching, getVisibleTodos } from '../reducers';
 import TodoList from './TodoList';
 import FetchError from './FetchError';
 import * as fromList from '../reducers/createList';
@@ -69,6 +70,8 @@ const mapStateToProps = (state, { params }) => {
     filter,
     listByFilter: state.listByFilter,
     byId: state.byId,
+    // Not optimized : return always a new ref array
+    test_array: [],
   };
 };
 
